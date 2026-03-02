@@ -15,9 +15,10 @@ export default function LoginPage() {
       try {
         const user = await apiFetch("/api/me");
         if (user) {
-          navigate("/dashboard"); // already logged in
+          navigate("/dashboard", { replace: true });
         }
       } catch (err) {
+        // if not authenticated, that's fine
         if (err.status !== 401) {
           setError(err.message);
         }
@@ -30,11 +31,11 @@ export default function LoginPage() {
   }, [navigate]);
 
   function handleLogin() {
-    // Redirect to Spring OAuth2 login
+    // Redirect to Spring Security OAuth2 login endpoint
     window.location.href = `${API_URL}/oauth2/authorization/google`;
   }
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p style={{ textAlign: "center", marginTop: 80 }}>Loading...</p>;
 
   return (
     <div style={{ textAlign: "center", marginTop: "100px" }}>
@@ -51,7 +52,7 @@ export default function LoginPage() {
         style={{
           padding: "10px 20px",
           fontSize: "16px",
-          cursor: "pointer"
+          cursor: "pointer",
         }}
       >
         Sign in with Google
