@@ -2,61 +2,135 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiFetch } from "../api";
 
+/**
+ * Login page:
+ * - If already logged in (cookie session exists), redirect to /dashboard
+ * - Otherwise show a "Login with GitHub" button that sends browser to Spring OAuth start
+ */
 export default function LoginPage() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
+  const [checking, setChecking] = useState(true);
   const [error, setError] = useState("");
 
-  const API_URL = import.meta.env.VITE_API_URL;
-
-  // Check if user is already logged in
+  // If user already has a valid Spring session cookie, skip login page
   useEffect(() => {
-    async function checkAuth() {
+    (async () => {
       try {
-        const user = await apiFetch("/api/me");
-        if (user) {
-          navigate("/dashboard", { replace: true });
-        }
-      } catch (err) {
-        // if not authenticated, that's fine
-        if (err.status !== 401) {
-          setError(err.message);
-        }
+        await apiFetch("/api/me"); // will succeed if logged in
+        navigate("/dashboard", { replace: true });
+      } catch {
+        // Not logged in, stay on login page
       } finally {
-        setLoading(false);
+        setChecking(false);
       }
-    }
-
-    checkAuth();
+    })();
   }, [navigate]);
 
-  function handleLogin() {
-    // Redirect to Spring Security OAuth2 login endpoint
-    window.location.href = `${API_URL}/oauth2/authorization/google`;
+  const loginWithGithub = () => {
+    // Start OAuth login on the backend (Spring Security)
+    window.location.href = `${import.meta.env.VITE_API_URL}/oauth2/authorization/github`;
+  };
+
+  // Optional: if you add Google later, enable this route in Spring and properties
+  // const loginWithGoogle = () => {
+  //   window.location.href = `${import.meta.env.VITE_API_URL}/oauth2/authorization/google`;
+  // };
+
+  if (checking) {
+    return (
+      <div style={styles.page}>
+        <div style={styles.card}>
+          <h1 style={styles.title}>Job Tracker</h1>
+          <p style={styles.text}>Checking session…</p>
+        </div>
+      </div>
+    );
   }
 
-  if (loading) return <p style={{ textAlign: "center", marginTop: 80 }}>Loading...</p>;
-
   return (
-    <div style={{ textAlign: "center", marginTop: "100px" }}>
-      <h1>Welcome to the App</h1>
+    <div style={styles.page}>
+      <div style={styles.card}>
+        <h1 style={styles.title}>Job Tracker</h1>
+        <p style={styles.text}>Sign in to continue</p>
 
-      {error && (
-        <div style={{ color: "red", marginBottom: "20px" }}>
-          {error}
-        </div>
-      )}
+        <button style={styles.primaryBtn} onClick={loginWithGithub}>
+          Continue with GitHub
+        </button>
 
-      <button
-        onClick={handleLogin}
-        style={{
-          padding: "10px 20px",
-          fontSize: "16px",
-          cursor: "pointer",
-        }}
-      >
-        Sign in with Google
-      </button>
+        {/* Uncomment if you add Google OAuth on backend */}
+        {/* <button style={styles.secondaryBtn} onClick={loginWithGoogle}>
+          Continue with Google
+        </button> */}
+
+        {error && <p style={styles.error}>{error}</p>}
+
+        <p style={styles.small}>
+          Backend: <code>{import.meta.env.VITE_API_URL}</code>
+        </p>
+      </div>
     </div>
   );
 }
+
+const styles = {
+  page: {
+    minHeight: "100vh",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 24,
+    background: "#f6f7fb",
+    fontFamily: "system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif",
+  },
+  card: {
+    width: "100%",
+    maxWidth: 420,
+    background: "white",
+    borderRadius: 16,
+    padding: 24,
+    boxShadow: "0 10px 25px rgba(0,0,0,0.08)",
+  },
+  title: {
+    margin: 0,
+    fontSize: 28,
+    letterSpacing: "-0.02em",
+  },
+  text: {
+    marginTop: 8,
+    marginBottom: 18,
+    color: "#555",
+  },
+  primaryBtn: {
+    width: "100%",
+    padding: "12px 14px",
+    borderRadius: 12,
+    border: "none",
+    cursor: "pointer",
+    fontWeight: 700,
+    background: "#111827",
+    color: "white",
+    fontSize: 16,
+  },
+  secondaryBtn: {
+    width: "100%",
+    padding: "12px 14px",
+    borderRadius: 12,
+    border: "1px solid #ddd",
+    cursor: "pointer",
+    fontWeight: 700,
+    background: "white",
+    color: "#111827",
+    fontSize: 16,
+    marginTop: 10,
+  },
+  error: {
+    marginTop: 12,
+    color: "#b91c1c",
+    fontWeight: 600,
+  },
+  small: {
+    marginTop: 16,
+    color: "#6b7280",
+    fontSize: 12,
+  },
+};
