@@ -1,0 +1,29 @@
+{
+  "name": "cst-438_project2_front_end",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sungmin-park-01/CST-438_Project2_Front_end.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sungmin-park-01/CST-438_Project2_Front_end/issues"
+  },
+  "homepage": "https://github.com/sungmin-park-01/CST-438_Project2_Front_end#readme",
+  "dependencies": {
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {
+    "vite": "^8.0.0"
+  }
+}
