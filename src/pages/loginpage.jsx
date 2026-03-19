@@ -26,15 +26,18 @@ export default function LoginPage() {
     })();
   }, [navigate]);
 
+  // GitHub
   const loginWithGithub = () => {
     // Start OAuth login on the backend (Spring Security)
-    window.location.href = `${import.meta.env.VITE_API_URL}/oauth2/authorization/github`;
+    //window.location.href = `${import.meta.env.VITE_API_URL}/oauth2/authorization/github`;
+    window.location.href = `/oauth-success`;
   };
 
-  // Optional: if you add Google later, enable this route in Spring and properties
-  // const loginWithGoogle = () => {
-  //   window.location.href = `${import.meta.env.VITE_API_URL}/oauth2/authorization/google`;
-  // };
+  // Google
+  const loginWithGoogle = () => {
+    //window.location.href = `${import.meta.env.VITE_API_URL}/oauth2/authorization/google`;
+    window.location.href = `/dashboard`;
+  };
 
   if (checking) {
     return (
@@ -54,7 +57,13 @@ export default function LoginPage() {
         <p style={styles.text}>Sign in to continue</p>
 
         <button style={styles.primaryBtn} onClick={loginWithGithub}>
-          Continue with GitHub
+          Continue with GitHub(for testing, redirects to /oauth-success without real OAuth)
+        </button>
+
+        <div style={{ height: 12 }} />
+
+        <button style={styles.primaryBtn} onClick={loginWithGoogle}>
+          Continue with Google(for testing, redirects to /dashboard without real OAuth)
         </button>
 
         {/* Uncomment if you add Google OAuth on backend */}
