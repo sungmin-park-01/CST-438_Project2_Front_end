@@ -110,15 +110,12 @@ const styles = {
     color: "#555",
   },
   primaryBtn: {
-    width: "100%",
-    padding: "12px 14px",
-    borderRadius: 12,
-    border: "none",
-    cursor: "pointer",
-    fontWeight: 700,
-    background: "#111827",
+    backgroundColor: "#007bff",
     color: "white",
-    fontSize: 16,
+    padding: "10px 20px",
+    border: "none",
+    borderRadius: "6px",
+    cursor: "pointer"
   },
   secondaryBtn: {
     width: "100%",
