@@ -39,6 +39,12 @@ export default function LoginPage() {
     window.location.href = `/dashboard`;
   };
 
+  // for test
+  const notesOverview = () => {
+    //window.location.href = `${import.meta.env.VITE_API_URL}/oauth2/authorization/google`;
+    window.location.href = `/notes`;
+  };
+
   if (checking) {
     return (
       <div style={styles.page}>
@@ -64,6 +70,10 @@ export default function LoginPage() {
 
         <button style={styles.primaryBtn} onClick={loginWithGoogle}>
           Continue with Google(for testing, redirects to /dashboard without real OAuth)
+        </button>
+
+        <button style={styles.primaryBtn} onClick={notesOverview}>
+          add notes
         </button>
 
         {/* Uncomment if you add Google OAuth on backend */}
