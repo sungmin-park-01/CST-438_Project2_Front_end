@@ -30,17 +30,66 @@ function NoteCard({ note }) {
       </p>
 
       <div style={styles.buttonRow}>
-        <button style={styles.editBtn}>Edit</button>
-        <button style={styles.deleteBtn}>Delete</button>
+        <button
+          style={styles.editBtn}
+          onClick={() => onEdit(note)}
+        >
+          Edit
+        </button>
+
+        <button
+          style={styles.deleteBtn}
+          onClick={() => onDelete(note.notesId)}
+        >
+          Delete
+        </button>
       </div>
     </div>
   );
+}
+
+// Modal 
+function handleEdit(note) {
+  setSelectedNote(note);
+  setEditContent(note.content);
+  setIsEditModalOpen(true);
+}
+
+
+async function handleSaveEdit() {
+  try {
+    await apiFetch(`/job-applications/notes/${selectedNote.notesId}`, {
+      method: "PUT",
+      body: JSON.stringify({
+        content: editContent
+      }),
+    });
+
+    setNotes(prevNotes =>
+      prevNotes.map(note =>
+        note.notesId === selectedNote.notesId
+          ? { ...note, content: editContent, lastEdited: new Date().toISOString() }
+          : note
+      )
+    );
+
+    setIsEditModalOpen(false);
+    setSelectedNote(null);
+    setEditContent("");
+  } catch (err) {
+    console.error("Failed to update note", err);
+  }
 }
 
 export default function NotesOverviewPage() {
 
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedNote, setSelectedNote] = useState(null);
+
+  const [editContent, setEditContent] = useState("");
 
   useEffect(() => {
 
