@@ -45,6 +45,14 @@ export default function LoginPage() {
     window.location.href = `/notes`;
   };
 
+  const addNote = () => {
+    window.location.href = "/notes/new/1";
+  };
+
+  const editNote = () => {
+    window.location.href = "/notes/edit/1";
+  };
+
   if (checking) {
     return (
       <div style={styles.page}>
@@ -72,8 +80,22 @@ export default function LoginPage() {
           Continue with Google(for testing, redirects to /dashboard without real OAuth)
         </button>
 
+        <div style={{ height: 12 }} />
+
         <button style={styles.primaryBtn} onClick={notesOverview}>
           add notes
+        </button>
+
+        <div style={{ height: 12 }} />
+
+        <button style={styles.primaryBtn} onClick={addNote}>
+          Add Note Test
+        </button>
+
+        <div style={{ height: 12 }} />
+
+        <button style={styles.primaryBtn} onClick={editNote}>
+          Edit Note Test
         </button>
 
         {/* Uncomment if you add Google OAuth on backend */}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { apiFetch } from "../api";
 
 function formatDate(dateString) {
@@ -13,7 +14,7 @@ function formatDate(dateString) {
   });
 }
 
-function NoteCard({ note }) {
+function NoteCard({ note, onEdit, onDelete }) {
   return (
     <div style={styles.card}>
       <h2 style={styles.jobTitle}>{note.jobTitle}</h2>
@@ -30,27 +31,34 @@ function NoteCard({ note }) {
       </p>
 
       <div style={styles.buttonRow}>
-        <button style={styles.editBtn}>Edit</button>
-        <button style={styles.deleteBtn}>Delete</button>
+        <button
+          style={styles.editBtn}
+          onClick={() => onEdit(note)}
+        >
+          Edit
+        </button>
+
+        <button
+          style={styles.deleteBtn}
+          onClick={() => onDelete(note)}
+        >
+          Delete
+        </button>
       </div>
     </div>
   );
 }
 
 export default function NotesOverviewPage() {
-
+  const navigate = useNavigate();
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-
     async function loadNotes() {
       try {
-
         const data = await apiFetch("/job-applications/notes");
-
         setNotes(data);
-
       } catch (err) {
         console.error("Failed to load notes", err);
       } finally {
@@ -59,8 +67,31 @@ export default function NotesOverviewPage() {
     }
 
     loadNotes();
-
   }, []);
+
+  const handleEdit = (note) => {
+    navigate(`/notes/edit/${note.applicationId}/${note.notesId}`);
+  };
+
+  const handleDelete = async (note) => {
+    const confirmed = window.confirm(
+      `Delete note for "${note.jobTitle}"?`
+    );
+
+    if (!confirmed) return;
+
+    try {
+
+      await apiFetch(`/job-applications/${note.applicationId}/note/${note.notesId}`, {
+        method: "DELETE",
+      });
+
+      setNotes((prev) => prev.filter((n) => n.notesId !== note.notesId));
+    } catch (err) {
+      console.error("Failed to delete note", err);
+      alert("Delete failed.");
+    }
+  };
 
   if (loading) {
     return <p style={{ padding: 40 }}>Loading notes...</p>;
@@ -72,11 +103,18 @@ export default function NotesOverviewPage() {
 
   return (
     <div style={styles.page}>
-      <h1 style={styles.pageTitle}>Application Notes</h1>
+      <div style={styles.topBar}>
+        <h1 style={styles.pageTitle}>Application Notes</h1>
+      </div>
 
       <div style={styles.list}>
-        {sortedNotes.map(note => (
-          <NoteCard key={note.notesId} note={note} />
+        {sortedNotes.map((note) => (
+          <NoteCard
+            key={note.notesId}
+            note={note}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
         ))}
       </div>
     </div>
@@ -84,74 +122,88 @@ export default function NotesOverviewPage() {
 }
 
 const styles = {
-
   page: {
     padding: "40px",
     background: "#f5f7fb",
     minHeight: "100vh",
-    fontFamily: "Arial"
+    fontFamily: "Arial, sans-serif",
   },
-
+  topBar: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: "30px",
+    gap: "12px",
+  },
   pageTitle: {
     fontSize: "32px",
-    marginBottom: "30px"
+    margin: 0,
   },
-
+  addBtn: {
+    padding: "10px 16px",
+    borderRadius: "8px",
+    border: "none",
+    background: "#2563eb",
+    color: "white",
+    fontWeight: 600,
+    cursor: "pointer",
+  },
   list: {
     display: "flex",
     flexDirection: "column",
-    gap: "20px"
+    gap: "20px",
   },
-
+  emptyState: {
+    background: "white",
+    padding: "24px",
+    borderRadius: "12px",
+    color: "#666",
+    boxShadow: "0 4px 10px rgba(0,0,0,0.06)",
+  },
   card: {
     background: "white",
     padding: "25px",
     borderRadius: "12px",
-    boxShadow: "0 4px 10px rgba(0,0,0,0.06)"
+    boxShadow: "0 4px 10px rgba(0,0,0,0.06)",
   },
-
   jobTitle: {
     margin: 0,
-    fontSize: "22px"
+    fontSize: "22px",
   },
-
   meta: {
     margin: "5px 0",
-    color: "#555"
+    color: "#555",
   },
-
   contentBox: {
     background: "#f8fafc",
     padding: "15px",
     borderRadius: "8px",
     marginTop: "15px",
-    marginBottom: "15px"
+    marginBottom: "15px",
+    whiteSpace: "pre-wrap",
   },
-
   lastEdited: {
     fontSize: "14px",
-    color: "#777"
+    color: "#777",
   },
-
   buttonRow: {
     marginTop: "15px",
     display: "flex",
-    gap: "10px"
+    gap: "10px",
   },
-
   editBtn: {
     padding: "8px 14px",
     borderRadius: "6px",
     border: "1px solid #ccc",
-    cursor: "pointer"
+    background: "white",
+    cursor: "pointer",
   },
-
   deleteBtn: {
     padding: "8px 14px",
     borderRadius: "6px",
     border: "1px solid #ffb4b4",
     background: "#fff5f5",
     color: "#b91c1c",
-    cursor: "pointer"
-  }
+    cursor: "pointer",
+  },
 };
