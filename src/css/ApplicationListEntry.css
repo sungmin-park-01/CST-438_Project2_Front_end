@@ -1,0 +1,67 @@
+.application-list-entry {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(216, 227, 240, 0.95);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 14px 30px rgba(15, 42, 74, 0.08);
+}
+
+.application-list-main,
+.application-list-note {
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+.application-list-main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  background: transparent;
+  text-align: left;
+  color: var(--jt-text);
+}
+
+.application-list-company {
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--jt-primary-deep);
+}
+
+.application-list-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.application-list-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  color: var(--jt-text-soft);
+  font-size: 0.92rem;
+}
+
+.application-list-note {
+  align-self: center;
+  min-height: 46px;
+  padding: 0 18px;
+  background: rgba(10, 102, 194, 0.1);
+  color: var(--jt-primary-deep);
+  font-weight: 800;
+}
+
+@media (max-width: 700px) {
+  .application-list-entry {
+    grid-template-columns: 1fr;
+  }
+
+  .application-list-note {
+    width: 100%;
+  }
+}

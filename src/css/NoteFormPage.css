@@ -1,0 +1,14 @@
+.note-card {
+  padding: 30px;
+}
+
+.note-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.note-save {
+  margin-top: 18px;
+}

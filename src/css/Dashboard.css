@@ -1,0 +1,15 @@
+.dashboard-card {
+  padding: 32px;
+}
+
+.dashboard-kpi {
+  font-size: 1.2rem;
+  line-height: 1.4;
+}
+
+.dashboard-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 24px;
+}
