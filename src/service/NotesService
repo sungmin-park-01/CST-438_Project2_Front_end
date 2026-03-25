@@ -1,0 +1,30 @@
+import { apiFetch } from "../api";
+
+export const notesService = {
+
+    
+    async getNote(noteId, applicationId){
+        return apiFetch(`/job-applications/${applicationId}/note/${noteId}`)
+    },
+
+    async createNote(noteData, applicationId){
+        return apiFetch(`/job-applications/${applicationId}/note`, {
+            method: 'POST',
+            body: JSON.stringify(noteData)
+        });
+    },
+
+
+    async updateNote( noteId, noteData, applicationId) {
+        return apiFetch(`/job-applications/${applicationId}/note/${noteId}`, {
+            method: 'PATCH',
+            body: JSON.stringify(noteData)
+        });
+    },
+
+    async deleteNote( noteId, applicationId){
+        return apiFetch(`/job-applications/${applicationId}/note/${noteId}`), {
+            method: 'DELETE'
+        }
+    }
+};

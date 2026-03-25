@@ -17,7 +17,7 @@ export default function LoginPage() {
     (async () => {
       try {
         await apiFetch("/api/me"); // will succeed if logged in
-        navigate("/dashboard", { replace: true });
+        navigate("/landing", { replace: true });
       } catch {
         // Not logged in, stay on login page
       } finally {

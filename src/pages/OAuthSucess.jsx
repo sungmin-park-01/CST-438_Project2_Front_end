@@ -19,7 +19,7 @@ export default function OAuthSuccess() {
         setStatus("Verifying session…");
         await apiFetch("/api/me"); // confirms cookie is present + accepted
         setStatus("Signed in! Redirecting…");
-        navigate("/dashboard", { replace: true });
+        navigate("/landing", { replace: true });
       } catch (e) {
         // If we fail here, it usually means cookie/CORS/SameSite mismatch
         setStatus("Could not verify sign-in.");
