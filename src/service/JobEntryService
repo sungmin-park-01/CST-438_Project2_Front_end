@@ -1,0 +1,39 @@
+import { apiFetch } from "../api";
+
+export const jobEntryService = {
+
+    async getAllEntries() {
+        return apiFetch('/job-entries')
+    },
+
+    async getEntry(jobId){
+        return apiFetch(`/job-entries/${jobId}`)
+    },
+
+    async createEntry(jobData){
+        return apiFetch('/job-entries', {
+            method: 'POST',
+            body: JSON.stringify(jobData)
+        });
+    },
+
+    async replaceEntry(jobId, jobData) {
+        return apiFetch(`/job-entries/${jobId}`, {
+            method: 'PUT',
+            body: JSON.stringify(jobData)
+        });
+    },
+
+    async updateEntry( jobId, jobData) {
+        return apiFetch(`/job-entries/${jobId}`, {
+            method: 'PATCH',
+            body: JSON.stringify(jobData)
+        });
+    },
+
+    async deleteEntry( jobId){
+        return apiFetch(`/job-entries/${jobId}`, {
+            method: 'DELETE'
+        });
+    }
+};
