@@ -5,6 +5,9 @@ import OAuthSuccess from "./pages/OAuthSucess";
 import LandingPage from "./pages/LandingPage";
 import AllApplications from "./pages/AllApplications";
 import ApplicationEntry from "./pages/ApplicationEntry";
+import NotesOverviewPage from "./pages/NotesOverviewPage";
+import NoteFormPage from "./pages/NoteFormPage";
+
 
 export default function App() {
   return (
@@ -21,6 +24,10 @@ export default function App() {
       <Route path="/applications/:applicationId/note/:noteId" element={<ApplicationEntry />} />
       <Route path="/applications/:applicationId/note/:noteId/edit" element={<ApplicationEntry />} />
 
+      <Route path="/notes" element={<NotesOverviewPage />} />
+      <Route path="/notes/new/:applicationId" element={<NoteFormPage />} />
+      <Route path="/notes/edit/:applicationId/:noteId" element={<NoteFormPage />} />
+ 
     </Routes>
   );
 }

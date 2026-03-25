@@ -26,15 +26,32 @@ export default function LoginPage() {
     })();
   }, [navigate]);
 
+  // GitHub
   const loginWithGithub = () => {
     // Start OAuth login on the backend (Spring Security)
-    window.location.href = `${import.meta.env.VITE_API_URL}/oauth2/authorization/github`;
+    //window.location.href = `${import.meta.env.VITE_API_URL}/oauth2/authorization/github`;
+    window.location.href = `/oauth-success`;
   };
 
-  // Optional: if you add Google later, enable this route in Spring and properties
-  // const loginWithGoogle = () => {
-  //   window.location.href = `${import.meta.env.VITE_API_URL}/oauth2/authorization/google`;
-  // };
+  // Google
+  const loginWithGoogle = () => {
+    //window.location.href = `${import.meta.env.VITE_API_URL}/oauth2/authorization/google`;
+    window.location.href = `/dashboard`;
+  };
+
+  // for test
+  const notesOverview = () => {
+    //window.location.href = `${import.meta.env.VITE_API_URL}/oauth2/authorization/google`;
+    window.location.href = `/notes`;
+  };
+
+  const addNote = () => {
+    window.location.href = "/notes/new/1";
+  };
+
+  const editNote = () => {
+    window.location.href = "/notes/edit/1";
+  };
 
   if (checking) {
     return (
@@ -54,7 +71,31 @@ export default function LoginPage() {
         <p style={styles.text}>Sign in to continue</p>
 
         <button style={styles.primaryBtn} onClick={loginWithGithub}>
-          Continue with GitHub
+          Continue with GitHub(for testing, redirects to /oauth-success without real OAuth)
+        </button>
+
+        <div style={{ height: 12 }} />
+
+        <button style={styles.primaryBtn} onClick={loginWithGoogle}>
+          Continue with Google(for testing, redirects to /dashboard without real OAuth)
+        </button>
+
+        <div style={{ height: 12 }} />
+
+        <button style={styles.primaryBtn} onClick={notesOverview}>
+          add notes
+        </button>
+
+        <div style={{ height: 12 }} />
+
+        <button style={styles.primaryBtn} onClick={addNote}>
+          Add Note Test
+        </button>
+
+        <div style={{ height: 12 }} />
+
+        <button style={styles.primaryBtn} onClick={editNote}>
+          Edit Note Test
         </button>
 
         {/* Uncomment if you add Google OAuth on backend */}
@@ -101,15 +142,12 @@ const styles = {
     color: "#555",
   },
   primaryBtn: {
-    width: "100%",
-    padding: "12px 14px",
-    borderRadius: 12,
-    border: "none",
-    cursor: "pointer",
-    fontWeight: 700,
-    background: "#111827",
+    backgroundColor: "#007bff",
     color: "white",
-    fontSize: 16,
+    padding: "10px 20px",
+    border: "none",
+    borderRadius: "6px",
+    cursor: "pointer"
   },
   secondaryBtn: {
     width: "100%",
