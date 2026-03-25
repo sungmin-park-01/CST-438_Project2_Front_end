@@ -143,7 +143,7 @@ export default function ApplicationEntry() {
     <div className="jt-page application-entry-page">
       <div className="jt-shell jt-stack">
         <section className="jt-hero">
-          <span className="jt-eyebrow">Opportunity Workspace</span>
+          <span className="jt-eyebrow">Job Application Tracker</span>
           <h1 className="jt-title">{modeTitle}</h1>
           <p className="jt-subtitle">
             Capture the essential job details, keep the application status current, and return later to update your progress.

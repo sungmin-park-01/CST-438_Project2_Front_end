@@ -47,26 +47,13 @@ export default function LoginPage() {
         <div className="row g-4 align-items-center min-vh-100">
           <div className="col-lg-6">
             <section className="jt-hero login-hero">
-              <span className="jt-eyebrow">Job Search Command Center</span>
+              <span className="jt-eyebrow">Job Application Tracker</span>
               <h1 className="jt-title">Stay on top of every application, interview, and next step.</h1>
               <p className="jt-subtitle">
-                A clean recruiting dashboard inspired by modern hiring platforms, built to help you move from application to offer with less chaos.
+                Group 7; CST438
               </p>
 
-              <div className="jt-kpi-grid mt-4">
-                <div className="jt-kpi">
-                  <div className="jt-kpi-label">Applications</div>
-                  <div className="jt-kpi-value">Organized</div>
-                </div>
-                <div className="jt-kpi">
-                  <div className="jt-kpi-label">Notes</div>
-                  <div className="jt-kpi-value">Centralized</div>
-                </div>
-                <div className="jt-kpi">
-                  <div className="jt-kpi-label">Admin</div>
-                  <div className="jt-kpi-value">Controlled</div>
-                </div>
-              </div>
+              
             </section>
           </div>
 
@@ -90,7 +77,6 @@ export default function LoginPage() {
               {error && <p className="login-error">{error}</p>}
 
               <p className="login-meta">
-                Backend: <code>{import.meta.env.VITE_API_URL}</code>
               </p>
             </section>
           </div>

@@ -23,7 +23,7 @@ export default function AllApplications() {
     <div className="jt-page applications-page">
       <div className="jt-shell jt-stack">
         <section className="jt-hero">
-          <span className="jt-eyebrow">Application Pipeline</span>
+          <span className="jt-eyebrow">Job Application Tracker</span>
           <h1 className="jt-title">Applications</h1>
           <p className="jt-subtitle">
             Track every role in one view, jump into details, and keep your notes attached to the right opportunity.
