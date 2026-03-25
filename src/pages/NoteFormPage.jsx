@@ -1,20 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { apiFetch } from "../api";
 
 export default function NoteFormPage() {
   const navigate = useNavigate();
   const { applicationId, noteId } = useParams();
 
-  const isEditMode = !!noteId;
+  const location = useLocation();
+
+  const isNew =
+    location.pathname.includes("/notes/new/") ||
+    location.pathname.includes("/note/new");
+
+  const isEdit =
+    location.pathname.includes("/notes/edit/") ||
+    (location.pathname.includes("/note/") &&
+      location.pathname.endsWith("/edit"));
+  const isView = !!noteId && !isNew && !isEdit;
 
   const [content, setContent] = useState("");
-  const [loading, setLoading] = useState(isEditMode);
+  const [loading, setLoading] = useState(isEdit || isView);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    if (!isEditMode) return;
+    if (!isEdit && !isView) return;
 
     async function loadNote() {
       try {
@@ -34,7 +44,7 @@ export default function NoteFormPage() {
     }
 
     loadNote();
-  }, [applicationId, noteId, isEditMode]);
+  }, [applicationId, noteId, isEdit, isView]);
 
   const handleSave = async () => {
     if (!content.trim()) {
@@ -46,7 +56,7 @@ export default function NoteFormPage() {
     setError("");
 
     try {
-      if (isEditMode) {
+      if (isEdit) {
         await apiFetch(
           `/job-applications/${applicationId}/note/${noteId}`,
           {
@@ -61,7 +71,7 @@ export default function NoteFormPage() {
           }
         );
       } else {
-        await apiFetch(
+        const created = await apiFetch(
           `/job-applications/${applicationId}/note`,
           {
             method: "POST",
@@ -74,9 +84,16 @@ export default function NoteFormPage() {
             }),
           }
         );
+        const createdNoteId = created?.notesId ?? created?.noteId;
+        if (createdNoteId) {
+          navigate(`/applications/${applicationId}/note/${createdNoteId}`, {
+            replace: true,
+          });
+          return;
+        }
       }
 
-      navigate("/notes");
+      navigate(`/applications/${applicationId}/note/${noteId}`, { replace: true });
 
     } catch (err) {
       console.error("Save failed", err);
@@ -94,25 +111,42 @@ export default function NoteFormPage() {
     <div style={styles.page}>
       <div style={styles.card}>
         <h1 style={styles.title}>
-          {isEditMode ? "Edit Note" : "Add Note"}
+          {isView ? "Note details" : isEdit ? "Edit Note" : "Add Note"}
         </h1>
 
         <textarea
           style={styles.textarea}
           value={content}
-          onChange={(e) => setContent(e.target.value)}
+          onChange={isView ? undefined : (e) => setContent(e.target.value)}
           placeholder="Write your note..."
+          readOnly={isView}
         />
 
         {error && <p style={styles.error}>{error}</p>}
 
-        <button
-          style={styles.saveBtn}
-          onClick={handleSave}
-          disabled={saving}
-        >
-          {saving ? "Saving..." : "Save"}
-        </button>
+        {isView ? (
+          <div style={styles.viewActions}>
+            <button
+              style={styles.secondaryBtn}
+              onClick={() =>
+                navigate(`/applications/${applicationId}/note/${noteId}/edit`)
+              }
+            >
+              edit note
+            </button>
+            <button style={styles.secondaryBtn} onClick={() => navigate("/notes")}>
+              Back to notes
+            </button>
+          </div>
+        ) : (
+          <button
+            style={styles.saveBtn}
+            onClick={handleSave}
+            disabled={saving}
+          >
+            {saving ? "Saving..." : "Save"}
+          </button>
+        )}
       </div>
     </div>
   );
@@ -155,6 +189,20 @@ const styles = {
     borderRadius: 8,
     cursor: "pointer",
     fontWeight: "bold",
+  },
+  secondaryBtn: {
+    padding: 10,
+    borderRadius: 8,
+    border: "1px solid #ccc",
+    background: "white",
+    cursor: "pointer",
+    fontWeight: 600,
+  },
+  viewActions: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 10,
+    marginTop: 10,
   },
   error: {
     color: "red",

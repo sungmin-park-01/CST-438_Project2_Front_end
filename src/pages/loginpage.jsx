@@ -28,30 +28,15 @@ export default function LoginPage() {
 
   // GitHub
   const loginWithGithub = () => {
-    // Start OAuth login on the backend (Spring Security)
-    //window.location.href = `${import.meta.env.VITE_API_URL}/oauth2/authorization/github`;
-    window.location.href = `/oauth-success`;
+    window.location.href = `${import.meta.env.VITE_API_URL}/oauth2/authorization/github`;
   };
 
   // Google
   const loginWithGoogle = () => {
-    //window.location.href = `${import.meta.env.VITE_API_URL}/oauth2/authorization/google`;
-    window.location.href = `/dashboard`;
+    window.location.href = `${import.meta.env.VITE_API_URL}/oauth2/authorization/google`;
   };
 
-  // for test
-  const notesOverview = () => {
-    //window.location.href = `${import.meta.env.VITE_API_URL}/oauth2/authorization/google`;
-    window.location.href = `/notes`;
-  };
 
-  const addNote = () => {
-    window.location.href = "/notes/new/1";
-  };
-
-  const editNote = () => {
-    window.location.href = "/notes/edit/1";
-  };
 
   if (checking) {
     return (
@@ -82,21 +67,14 @@ export default function LoginPage() {
 
         <div style={{ height: 12 }} />
 
-        <button style={styles.primaryBtn} onClick={notesOverview}>
-          add notes
-        </button>
+       
 
         <div style={{ height: 12 }} />
 
-        <button style={styles.primaryBtn} onClick={addNote}>
-          Add Note Test
-        </button>
 
         <div style={{ height: 12 }} />
 
-        <button style={styles.primaryBtn} onClick={editNote}>
-          Edit Note Test
-        </button>
+       
 
         {/* Uncomment if you add Google OAuth on backend */}
         {/* <button style={styles.secondaryBtn} onClick={loginWithGoogle}>

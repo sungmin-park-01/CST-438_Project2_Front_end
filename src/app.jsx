@@ -20,13 +20,9 @@ export default function App() {
       <Route path="/applications/new" element={<ApplicationEntry />} />
       <Route path="/applications/:applicationId" element={<ApplicationEntry />} />
       <Route path="/applications/:applicationId/edit" element={<ApplicationEntry />} />
-      <Route path="/applications/:applicationId/note/new" element={<ApplicationEntry />} />
-      <Route path="/applications/:applicationId/note/:noteId" element={<ApplicationEntry />} />
-      <Route path="/applications/:applicationId/note/:noteId/edit" element={<ApplicationEntry />} />
-
-      <Route path="/notes" element={<NotesOverviewPage />} />
-      <Route path="/notes/new/:applicationId" element={<NoteFormPage />} />
-      <Route path="/notes/edit/:applicationId/:noteId" element={<NoteFormPage />} />
+      <Route path="/applications/:applicationId/note/new" element={<NoteFormPage />} />
+      <Route path="/applications/:applicationId/note/:noteId" element={<NoteFormPage />} />
+      <Route path="/applications/:applicationId/note/:noteId/edit" element={<NoteFormPage />} />
  
     </Routes>
   );

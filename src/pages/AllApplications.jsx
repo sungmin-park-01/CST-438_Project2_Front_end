@@ -30,8 +30,14 @@ export default function AllApplications(){
                 <p>No applications found</p>
             ) : 
             (
-                applications.map((app) => <ApplicationListEntry onClick={()=> navigate(`/applications/${app.applicationId}`)} application={app} />
-            ))}
+                applications.map((app) => (
+                    <ApplicationListEntry
+                        key={app.applicationId}
+                        onClick={() => navigate(`/applications/${app.applicationId}`)}
+                        application={app}
+                    />
+                ))
+            )}
         </div>
 
         </div>
