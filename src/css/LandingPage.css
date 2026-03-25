@@ -1,0 +1,25 @@
+.landing-panel {
+  padding: 30px;
+}
+
+.landing-panel-copy {
+  margin-bottom: 24px;
+}
+
+.landing-panel-title {
+  margin: 0 0 10px;
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.landing-panel-text {
+  margin: 0;
+  color: var(--jt-text-soft);
+  line-height: 1.7;
+}
+
+.landing-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}

@@ -1,0 +1,29 @@
+.application-entry-toolbar {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.application-detail-block {
+  height: 100%;
+  padding: 20px;
+  border-radius: var(--jt-radius-md);
+  border: 1px solid rgba(216, 227, 240, 0.95);
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.application-detail-value {
+  margin-top: 10px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--jt-text);
+  line-height: 1.6;
+}
+
+.application-link {
+  word-break: break-word;
+  color: var(--jt-primary-deep);
+}
+
+.application-entry-actions {
+  margin-top: 24px;
+}

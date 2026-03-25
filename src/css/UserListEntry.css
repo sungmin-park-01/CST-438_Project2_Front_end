@@ -1,0 +1,34 @@
+.user-list-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 18px 20px;
+  border: 1px solid rgba(216, 227, 240, 0.95);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--jt-text);
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 14px 30px rgba(15, 42, 74, 0.08);
+}
+
+.user-list-entry-name {
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.user-list-entry-role {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 74px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(10, 102, 194, 0.1);
+  color: var(--jt-primary-deep);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}

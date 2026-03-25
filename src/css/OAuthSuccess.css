@@ -1,0 +1,19 @@
+.oauth-card {
+  width: min(620px, 100%);
+  padding: 36px;
+}
+
+.oauth-title {
+  margin-bottom: 8px;
+}
+
+.oauth-copy {
+  max-width: 460px;
+  margin: 0 auto;
+}
+
+.oauth-hint {
+  margin-top: 18px;
+  color: var(--jt-text-soft);
+  line-height: 1.7;
+}

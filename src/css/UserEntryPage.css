@@ -1,0 +1,55 @@
+.user-entry-toolbar {
+  display: flex;
+}
+
+.user-detail-block {
+  height: 100%;
+  padding: 20px;
+  border-radius: var(--jt-radius-md);
+  border: 1px solid rgba(216, 227, 240, 0.95);
+  background: rgba(255, 255, 255, 0.88);
+}
+
+.user-detail-value {
+  margin-top: 10px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--jt-text);
+  line-height: 1.6;
+}
+
+.user-entry-actions,
+.user-modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.user-entry-actions button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.user-admin-notice {
+  margin-bottom: 22px;
+  padding: 16px 18px;
+  border-radius: var(--jt-radius-md);
+  background: rgba(10, 102, 194, 0.08);
+  border: 1px solid rgba(10, 102, 194, 0.18);
+  color: var(--jt-primary-deep);
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.user-modal-title {
+  margin: 0 0 10px;
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.user-modal-copy {
+  margin-bottom: 18px;
+  color: var(--jt-text-soft);
+}

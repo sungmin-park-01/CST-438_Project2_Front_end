@@ -1,12 +1,9 @@
-
-
 import { useNavigate } from "react-router-dom";
+import "../css/ApplicationListEntry.css";
 
 export default function ApplicationListEntry({ application, onClick }) {
   const navigate = useNavigate();
 
-  // Note existence may or may not be included in the application DTO.
-  // Try a few common shapes so the UI can still render correctly.
   const noteId =
     application?.noteId ??
     application?.notesId ??
@@ -17,17 +14,25 @@ export default function ApplicationListEntry({ application, onClick }) {
   const hasNote = noteId !== null && noteId !== undefined;
 
   return (
-    <div>
-      <button onClick={onClick}>{application.jobTitle}</button>
+    <article className="application-list-entry">
+      <button className="application-list-main" onClick={onClick}>
+        <span className="application-list-company">{application.companyName ?? "Target Company"}</span>
+        <span className="application-list-title">{application.jobTitle}</span>
+        <span className="application-list-meta">
+          <span>{application.status ?? "In progress"}</span>
+          <span>{application.dateApplied ?? "No date"}</span>
+        </span>
+      </button>
       <button
+        className="application-list-note"
         onClick={() =>
           hasNote
             ? navigate(`/applications/${application.applicationId}/note/${noteId}`)
             : navigate(`/applications/${application.applicationId}/note/new`)
         }
       >
-        {hasNote ? "note" : "add note"}
+        {hasNote ? "Open note" : "Add note"}
       </button>
-    </div>
+    </article>
   );
 }
