@@ -16,7 +16,7 @@ export default function ApplicationListEntry({ application, onClick }) {
   return (
     <article className="application-list-entry">
       <button className="application-list-main" onClick={onClick}>
-        <span className="application-list-company">{application.companyName ?? "Target Company"}</span>
+        <span className="application-list-company">{application.companyName ?? "Company Name"}</span>
         <span className="application-list-title">{application.jobTitle}</span>
         <span className="application-list-meta">
           <span>{application.status ?? "In progress"}</span>

@@ -31,8 +31,8 @@ export const applicationService = {
     },
 
     async deleteApplication( applicationId){
-        return apiFetch(`/job-applications/${applicationId}`), {
+        return apiFetch(`/job-applications/${applicationId}`, {
             method: 'DELETE'
-        }
+        });
     }
 };

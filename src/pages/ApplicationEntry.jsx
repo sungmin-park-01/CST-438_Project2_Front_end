@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
+import ConfirmActionModal from "../components/ConfirmActionModal";
 import { applicationService } from "../service/ApplicationService";
 import { jobEntryService } from "../service/JobEntryService";
 import "../css/ApplicationEntry.css";
@@ -25,6 +26,8 @@ export default function ApplicationEntry() {
   const [application, setApplication] = useState(emptyApplication);
   const [originalApplication, setOriginalApplication] = useState(null);
   const [loading, setLoading] = useState(!isNew);
+  const [deleting, setDeleting] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const jobEntryFields = ["jobTitle", "companyName", "salaryText", "postingURL"];
   const jobApplicationFields = ["status", "dateApplied"];
@@ -123,6 +126,20 @@ export default function ApplicationEntry() {
     }
   }
 
+  async function handleDelete() {
+    if (!applicationId || deleting) return;
+
+    try {
+      setDeleting(true);
+      await applicationService.deleteApplication(applicationId);
+      navigate("/applications", { replace: true });
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setDeleting(false);
+    }
+  }
+
   function hasChanges(original, current, keys) {
     return keys.some((key) => original[key] !== current[key]);
   }
@@ -187,6 +204,16 @@ export default function ApplicationEntry() {
                 <button type="submit" className="jt-btn-primary">
                   {isNew ? "Create application" : "Update application"}
                 </button>
+                {isEdit && (
+                  <button
+                    type="button"
+                    className="jt-btn-danger ms-3"
+                    onClick={() => setShowDeleteModal(true)}
+                    disabled={deleting}
+                  >
+                    {deleting ? "Deleting..." : "Delete application"}
+                  </button>
+                )}
               </div>
             </form>
           </section>
@@ -237,10 +264,23 @@ export default function ApplicationEntry() {
               <button className="jt-btn-primary" onClick={() => navigate(`/applications/${applicationId}/edit`)}>
                 Edit application
               </button>
+              <button className="jt-btn-danger" onClick={() => setShowDeleteModal(true)} disabled={deleting}>
+                {deleting ? "Deleting..." : "Delete application"}
+              </button>
             </div>
           </section>
         )}
       </div>
+
+      <ConfirmActionModal
+        open={showDeleteModal}
+        title="Delete Application?"
+        message="This will permanently remove the application and its related note. This action cannot be undone."
+        confirmLabel="Delete application"
+        onConfirm={handleDelete}
+        onCancel={() => setShowDeleteModal(false)}
+        busy={deleting}
+      />
     </div>
   );
 }

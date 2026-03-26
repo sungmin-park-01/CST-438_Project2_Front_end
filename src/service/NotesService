@@ -23,8 +23,8 @@ export const notesService = {
     },
 
     async deleteNote( noteId, applicationId){
-        return apiFetch(`/job-applications/${applicationId}/note/${noteId}`), {
+        return apiFetch(`/job-applications/${applicationId}/note/${noteId}`, {
             method: 'DELETE'
-        }
+        });
     }
 };

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { apiFetch } from "../api";
+import ConfirmActionModal from "../components/ConfirmActionModal";
+import { notesService } from "../service/NotesService";
 import "../css/NoteFormPage.css";
 
 export default function NoteFormPage() {
@@ -15,6 +17,8 @@ export default function NoteFormPage() {
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(isEdit || isView);
   const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -84,6 +88,23 @@ export default function NoteFormPage() {
     }
   };
 
+  const handleDelete = async () => {
+    if (!noteId || deleting) return;
+
+    setDeleting(true);
+    setError("");
+
+    try {
+      await notesService.deleteNote(noteId, applicationId);
+      navigate("/applications", { replace: true });
+    } catch (err) {
+      console.error("Delete failed", err);
+      setError("Delete failed");
+    } finally {
+      setDeleting(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="jt-page note-page">
@@ -111,9 +132,14 @@ export default function NoteFormPage() {
               Back to applications
             </button>
             {isView && (
-              <button className="jt-btn-primary" onClick={() => navigate(`/applications/${applicationId}/note/${noteId}/edit`)}>
-                Edit note
-              </button>
+              <>
+                <button className="jt-btn-primary" onClick={() => navigate(`/applications/${applicationId}/note/${noteId}/edit`)}>
+                  Edit note
+                </button>
+                <button className="jt-btn-danger" onClick={() => setShowDeleteModal(true)} disabled={deleting}>
+                  {deleting ? "Deleting..." : "Delete note"}
+                </button>
+              </>
             )}
           </div>
 
@@ -129,12 +155,29 @@ export default function NoteFormPage() {
           {error && <p className="jt-error-state">{error}</p>}
 
           {!isView && (
-            <button className="jt-btn-primary note-save" onClick={handleSave} disabled={saving}>
-              {saving ? "Saving..." : "Save"}
-            </button>
+            <>
+              <button className="jt-btn-primary note-save" onClick={handleSave} disabled={saving}>
+                {saving ? "Saving..." : "Save"}
+              </button>
+              {isEdit && (
+                <button className="jt-btn-danger note-save" onClick={() => setShowDeleteModal(true)} disabled={deleting}>
+                  {deleting ? "Deleting..." : "Delete note"}
+                </button>
+              )}
+            </>
           )}
         </section>
       </div>
+
+      <ConfirmActionModal
+        open={showDeleteModal}
+        title="Delete Note?"
+        message="This will permanently remove this note from the application. This action cannot be undone."
+        confirmLabel="Delete note"
+        onConfirm={handleDelete}
+        onCancel={() => setShowDeleteModal(false)}
+        busy={deleting}
+      />
     </div>
   );
 }

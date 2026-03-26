@@ -1,0 +1,47 @@
+.confirm-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(11, 18, 32, 0.52);
+  backdrop-filter: blur(6px);
+}
+
+.confirm-modal-card {
+  width: min(100%, 460px);
+  padding: 28px;
+  border-radius: var(--jt-radius-lg);
+  box-shadow: 0 28px 80px rgba(15, 23, 42, 0.24);
+}
+
+.confirm-modal-title {
+  margin: 8px 0 10px;
+  font-size: clamp(1.45rem, 1.9vw, 1.8rem);
+  color: var(--jt-text);
+}
+
+.confirm-modal-copy {
+  margin: 0;
+  color: var(--jt-muted);
+  line-height: 1.65;
+}
+
+.confirm-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+@media (max-width: 640px) {
+  .confirm-modal-actions {
+    flex-direction: column-reverse;
+  }
+
+  .confirm-modal-actions button {
+    width: 100%;
+  }
+}
