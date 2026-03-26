@@ -8,6 +8,7 @@ import ApplicationEntry from "./pages/ApplicationEntry";
 import NoteFormPage from "./pages/NoteFormPage";
 import UserListPage from "./pages/UserListPage..jsx";
 import UserEntryPage from "./pages/UserEntryPage";
+import ProfilePage from "./pages/ProfilePage";
 
 
 export default function App() {
@@ -26,6 +27,7 @@ export default function App() {
       <Route path="/applications/:applicationId/note/:noteId/edit" element={<NoteFormPage />} />
       <Route path="/users" element={<UserListPage />} />
       <Route path="/users/:userId" element={<UserEntryPage />} />
+      <Route path="/profile" element={<ProfilePage />} />
     </Routes>
   );
 }

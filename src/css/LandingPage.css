@@ -1,3 +1,14 @@
+.landing-hero-topbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.landing-profile-trigger {
+  flex-shrink: 0;
+}
+
 .landing-panel {
   padding: 30px;
 }
@@ -22,4 +33,88 @@
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
+}
+
+.profile-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.42);
+  display: flex;
+  justify-content: flex-end;
+  z-index: 1100;
+}
+
+.profile-drawer {
+  width: min(420px, 100%);
+  min-height: 100vh;
+  padding: 28px 24px;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.profile-drawer-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.profile-drawer-title {
+  margin: 8px 0 0;
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+.profile-drawer-close {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(10, 102, 194, 0.16);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--jt-primary-deep);
+  font-weight: 800;
+}
+
+.profile-drawer-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.profile-drawer-value {
+  margin-top: 8px;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--jt-text);
+}
+
+.profile-drawer-value-small {
+  font-size: 0.98rem;
+  line-height: 1.6;
+  word-break: break-word;
+}
+
+.profile-drawer-copy {
+  margin: 0;
+  color: var(--jt-text-soft);
+  line-height: 1.7;
+}
+
+.profile-drawer-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (max-width: 768px) {
+  .landing-hero-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .profile-drawer {
+    width: 100%;
+    padding: 24px 20px;
+  }
 }

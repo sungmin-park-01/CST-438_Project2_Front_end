@@ -1,0 +1,39 @@
+.profile-toolbar {
+  display: flex;
+}
+
+.profile-detail-block {
+  height: 100%;
+  padding: 20px;
+  border-radius: var(--jt-radius-md);
+  border: 1px solid rgba(216, 227, 240, 0.95);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.profile-detail-value {
+  margin-top: 10px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--jt-text);
+  line-height: 1.6;
+}
+
+.profile-actions,
+.profile-modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.profile-modal-title {
+  margin: 0 0 10px;
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.profile-modal-copy {
+  margin-bottom: 18px;
+  color: var(--jt-text-soft);
+  line-height: 1.7;
+}
